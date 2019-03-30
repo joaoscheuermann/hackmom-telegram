@@ -1,0 +1,14 @@
+{
+  "name": "hackmom-wpp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/joaoscheuermann/hackmom-wpp.git",
+  "author": "JoãoScheuermann <scheuermann.design@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "twilio": "^3.30.0"
+  }
+}
