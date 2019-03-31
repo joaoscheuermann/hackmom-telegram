@@ -8,6 +8,8 @@ const Audio = require('./audio')
 
 const validCPF = require('./cpf')
 
+const PORT = process.env.PORT || 5000
+
 const bot = new Telegraf('808113020:AAE4_OaWucE6RDwkbb8XtU6iDbEt1adGIW0')
 const db = new DB()
 
@@ -115,7 +117,7 @@ bot.on('voice', async ctx => {
 })
 
 // BOOTSTRAP
-app.listen(8080, () => {
-  console.log('Listening on 8080')
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}, YAY!`)
   bot.launch()
 })
