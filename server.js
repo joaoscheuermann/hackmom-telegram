@@ -1,6 +1,7 @@
 const Telegraf = require('telegraf')
-var express = require('express')
-var app = express()
+const express = require('express')
+const cors = require('cors')
+const app = express()
 
 const DB = require('./db')
 const User = require('./user')
@@ -22,6 +23,13 @@ function delay (delay) {
 }
 
 // EXPRESS JS
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions))
+
 app.post('/token/generate', (req, res) => {
   const { cpf } = req.query
   const user = db.getUser(cpf, 'cpf')
