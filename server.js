@@ -139,6 +139,6 @@ bot.on('voice', async ctx => {
 
 // BOOTSTRAP
 app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}, YAY!`)
+  console.log(`Listening on ${PORT}, YAYAY!`)
   bot.launch()
 })

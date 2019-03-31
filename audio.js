@@ -8,8 +8,8 @@ class Audio {
   async fetchText () {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.text = 'Texto mocado pra caralho'
-        resolve('Texto mocado pra caralho')
+        this.text = 'Mock Text, waiting for the implementation of speech to text'
+        resolve()
       }, 5000)
     })
   }
