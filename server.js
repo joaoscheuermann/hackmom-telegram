@@ -33,7 +33,7 @@ app.post('/token/generate', (req, res) => {
     res.sendStatus(200)
     res.end()
   } else {
-    res.sendStatus(300)
+    res.sendStatus(404)
     res.end()
   }
 })
@@ -49,14 +49,19 @@ app.post('/token/validate', (req, res) => {
       res.setHeader('Content-Type', 'application/json')
       res.end(JSON.stringify(user))
     } else {
-      res.sendStatus(300)
+      res.sendStatus(401)
       res.end()
     }
 
   } else {
-    res.sendStatus(300)
+    res.sendStatus(401)
     res.end()
   }
+})
+
+app.get('/debug/db', (req, res) => {
+  res.setHeader('Content-Type', 'application/json')
+  res.end(JSON.stringify(db))
 })
 
 // BOT
