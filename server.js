@@ -36,7 +36,7 @@ app.post('/token/generate', (req, res) => {
 
   if (user) {
     user.generateToken()
-    bot.telegram.sendMessage(user.id, `Seu token de verificação na plataforma é: ${user.token}`)
+    bot.telegram.sendMessage(user.id, `Seu token de verificação é: ${user.token}`)
 
     res.sendStatus(200)
     res.end()
@@ -86,7 +86,16 @@ bot.on('text', async ctx => {
       if (!db.hasUser(id)) {
         db.addUser(new User(id))
 
-        ctx.reply('Bem vindo ao Minha Cuca .... {{ Instruções de uso }}')
+        ctx.reply(` Bem vindo(a) ao Minha Cuca!
+          Para criar uma nova memória, peça para o seu médico gravar um áudio informando:
+          1. Nome e CRM Médico
+          2. Toda sua Anamnese (exames solicitados e resultados, hipótese de diagnóstico, diagnóstico, tratamento e medicamentos).
+          Ajude o Minha Cuca ficar cada vez mais confiável e evite áudios com interrupções.
+          
+          Caso queira consultar tudo o que o Minha Cunha já guardou, acesse www.minhacuca.com.br e informe seu CPF. Te enviaremos um código de validação para acesso. 
+          Ah, se você preferir o médico também pode acessar o site desde que você compartilhe o código que passaremos para você!!
+          
+          Pronto! Você não está mais sozinho, Minha Cuca guardará suas consultas na memória :D `)
       }
       break;
 
@@ -97,7 +106,7 @@ bot.on('text', async ctx => {
         user.setCPF(text)
         ctx.reply('CPF registrado com sucesso!')
         await delay(1000)
-        ctx.reply('Agora você pode acessar nossa plataforma no link: {{link}} e ter acesso a todos os seus dados.')
+        ctx.reply('Agora você pode acessar suas memorias no link: {{link}}')
       } else if (user.hasCPF && validCPF(text)) {
         ctx.reply('Parece que você já registrou um CPF.')
       }
@@ -106,7 +115,7 @@ bot.on('text', async ctx => {
 })
 
 bot.on('voice', async ctx => {
-  ctx.reply('Estamos processando seu audio, é só aguardar um pouquinho que ele estará disponivel em nossa plataforma.')
+  ctx.reply('Recebemos o áudio e já estamos criando uma nova memória, espera só mais um pouquinho...')
 
   const id = ctx.message.from.id
   const user = db.getUser(id)
@@ -117,15 +126,14 @@ bot.on('voice', async ctx => {
   await audio.fetchText()
 
   user.addAudio(audio)
+
   if (!user.hasCPF) {
-    ctx.reply('Prontinho! Parece que você não registrou seu CPF, assim você não podera acessar nossa plataforma :(')
-    await delay(5000)
-    ctx.reply('Lá voce tem um monte de vantagens {{ valores }}')
+    ctx.reply('Para criarmos a memória, falta só nos dizer quem é você, pode nos passar seu CPF?')
     await delay(2000)
-    ctx.reply('Basta digitar o seu CPF, e logo depois você receberá o link para acessar a plataforma.')
+    ctx.reply('Fique tranquilo, nas próximas consultas já nos conheceremos!')
   }
   else {
-    ctx.reply('Prontinho! Seu audio já está disponivel na plataforma :) {{ link }}')
+    ctx.reply('Memória criada com sucesso!! Até a próxima consulta!')
   }
 })
 
